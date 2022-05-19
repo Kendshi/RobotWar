@@ -18,7 +18,7 @@ public class ShootingСontrol : MonoBehaviour
         _tower = GetComponentInChildren<TowerRotate>().transform;
         _effectPoolPrefab = _effectPoolPrefab.CreatePool(_tower, _startPositonForProjectile);
         _projectilePool = _projectilePool.CreatePool(_tower, _startPositonForProjectile);
-        _collisionEffectPool = _collisionEffectPool.CreatePool();
+        _collisionEffectPool.CreatePool();
         InputListener.Fire += Fire;
     }
 

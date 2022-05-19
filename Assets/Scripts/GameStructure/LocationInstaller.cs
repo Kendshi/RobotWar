@@ -3,32 +3,34 @@ using UnityEngine;
 
 public class LocationInstaller : MonoInstaller
 {
-    [SerializeField] private Transform StartPoint;
-    [SerializeField] private GameObject PlayerPrefab;
-    [SerializeField] private InputListener InputListener;
+    [SerializeField] private Transform _startPoint;
+    [SerializeField] private GameObject _playerPrefab;
+    [SerializeField] private InputListener _inputListener;
+    [SerializeField] private EnemyFactory _enemyFactory;
 
     public override void InstallBindings()
     {
-        BindInstallerInterface();
         BindInput();
         BindPlayerRobot();
+        BindEnemyFactory();
     }
 
-    private void BindInstallerInterface()
+    private void BindEnemyFactory()
     {
-        Container.BindInterfacesTo<LocationInstaller>().FromInstance(this).AsSingle();
+        Container.Bind<EnemyFactory>().FromInstance(_enemyFactory).AsSingle();
     }
+
 
     private void BindInput()
     {
-        Container.Bind<InputListener>().FromInstance(InputListener).AsSingle();
+        Container.Bind<InputListener>().FromInstance(_inputListener).AsSingle();
     }
 
     private void BindPlayerRobot()
     {
-        MovementController movementController = Container
-                    .InstantiatePrefabForComponent<MovementController>(PlayerPrefab, StartPoint.position, Quaternion.identity, null);
+        PlayerMovement movementController = Container
+                    .InstantiatePrefabForComponent<PlayerMovement>(_playerPrefab, _startPoint.position, Quaternion.identity, null);
 
-        Container.Bind<MovementController>().FromInstance(movementController).AsSingle();
+        Container.Bind<PlayerMovement>().FromInstance(movementController).AsSingle();
     }
 }

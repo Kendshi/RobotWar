@@ -9,7 +9,7 @@ public class EnemyAI : MonoBehaviour
     private Animator _animator;
 
     [Inject]
-    private void Construct(MovementController movementController)
+    private void Construct(PlayerMovement movementController)
     {
         _target = movementController.GetComponent<Transform>();
     }

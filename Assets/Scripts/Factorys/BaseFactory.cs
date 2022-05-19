@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public abstract class BaseFactory<T> : MonoBehaviour where T : MonoBehaviour
@@ -6,8 +5,9 @@ public abstract class BaseFactory<T> : MonoBehaviour where T : MonoBehaviour
     [SerializeField] private T _prefab;
     [SerializeField] private Transform _spawnPosition;
 
-    public T CreateNewObject()
+    private T CreateGameObjectInstance(T prefab)
     {
-        return Instantiate(_prefab, _spawnPosition.position, Quaternion.identity);
+        T instance = Instantiate(prefab);
+        return instance;
     }
 }
