@@ -19,8 +19,7 @@ public class LocationInstaller : MonoInstaller
     {
         Container.Bind<EnemyFactory>().FromInstance(_enemyFactory).AsSingle();
     }
-
-
+    
     private void BindInput()
     {
         Container.Bind<InputListener>().FromInstance(_inputListener).AsSingle();

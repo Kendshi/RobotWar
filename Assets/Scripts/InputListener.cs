@@ -7,6 +7,8 @@ public class InputListener : MonoBehaviour
     public float Rotate { get { return _rotate; } }
     public static RaycastHit Hit { get; private set; }
 
+    public bool IsStrategyMode;
+
     private float _accel;
     private float _rotate;
     private Camera _mainCamera;
@@ -21,6 +23,35 @@ public class InputListener : MonoBehaviour
     }
 
     private void Update()
+    {
+        if (IsStrategyMode)
+        {
+            StrategyControls();
+        }
+        else
+        {
+            ActionControls();
+        }
+    }
+
+    private void StrategyControls()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            Ray cameraRay = _mainCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(cameraRay, out _hit))
+            {
+                var hex = _hit.transform.GetComponentInParent<Hex>();
+                
+                if (hex)
+                {
+                    hex.ClickOnRightButton();
+                }
+            }
+        }
+    }
+
+    private void ActionControls()
     {
         _accel = Input.GetAxis("Vertical");
         _rotate = Input.GetAxis("Horizontal");
